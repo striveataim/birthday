@@ -1,20 +1,15 @@
-import { useEffect, useRef, useState } from "react";
-import { CakeCSS } from "@/components/CakeCSS";
-import { ParallaxSection } from "@/components/ParallaxSection";
-import { FloatingHearts } from "@/components/FloatingHearts";
-import { Confetti } from "@/components/Confetti";
-import { RoastCard } from "@/components/RoastCard";
+import { useEffect, useState } from "react";
 
 const roasts = [
   {
     emoji: "🎂",
-    title: "The Cake is Real, Unlike Your  Excuses",
+    title: "The Cake is Real, Unlike Your Excuses",
     text: "Happy Birthday Nabina! They say age is just a number... but so is your IQ. Good thing you leveled up and left that behind! 🚀",
   },
   {
     emoji: "👑",
     title: "Queen Energy, Always",
-    text: "You're aging like fine wine — getting better every year, while you is probably still trying to figure out how to do laundry. Classic. 😂",
+    text: "You're aging like fine wine — getting better every year, while you are probably still trying to figure out how to do laundry. Classic. 😂",
   },
   {
     emoji: "🌟",
@@ -39,10 +34,9 @@ const roasts = [
 ];
 
 export default function Birthday() {
-  const [candles, setCandles] = useState(true);
+  const [candlesLit, setCandlesLit] = useState(true);
   const [showMessage, setShowMessage] = useState(false);
   const [scrollY, setScrollY] = useState(0);
-  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -51,125 +45,107 @@ export default function Birthday() {
   }, []);
 
   const blowCandles = () => {
-    setCandles(false);
+    setCandlesLit(false);
     setShowMessage(true);
   };
 
   return (
     <div className="birthday-page">
-      <Confetti />
-      <FloatingHearts />
-
-      {/* HERO SECTION */}
-      <section
-        ref={heroRef}
-        className="hero-section"
-        style={{
-          transform: `translateY(${scrollY * 0.3}px)`,
-        }}
-      >
-        <div className="hero-bg" style={{ transform: `translateY(${scrollY * 0.5}px)` }} />
-        <div className="hero-stars" style={{ transform: `translateY(${scrollY * 0.2}px)` }} />
-
-        <div className="hero-content">
+      <section className="hero-section" style={{ transform: `translateY(${scrollY * 0.08}px)` }}>
+        <div className="hero-overlay" />
+        <div className="hero-copy">
           <div className="birthday-badge">🎉 April 20, 2026 🎉</div>
           <h1 className="hero-title">
             Happy Birthday
             <br />
-            <span className="name-highlight">Nabina!</span>
+            <span>Nabina!</span>
           </h1>
           <p className="hero-subtitle">
-            Another year wiser, another year more fabulous ✨<br />
-            <span style={{ fontSize: "0.85em", opacity: 0.85 }}>
-              (and one year further from that questionable chapter of your life 😉)
-            </span>
+            Another year wiser, another year more fabulous ✨
+            <span> (and one year further from that questionable chapter of your life 😉)</span>
           </p>
         </div>
       </section>
 
-      {/* CAKE SECTION */}
       <section className="cake-section">
-        <div className="cake-backdrop" />
-        <div className="section-label">🍰 Your Birthday Cake 🍰</div>
+        <div className="section-label">🍰 Your Birthday Cake</div>
 
-        <CakeCSS candlesLit={candles} />
+        <div className="cake-frame" style={{ transform: `translateY(${scrollY * 0.02}px)` }}>
+          <div className="cake">
+            <div className="cake-top">
+              {new Array(5).fill(null).map((_, index) => (
+                <div key={index} className={`candle ${candlesLit ? "lit" : "blown"}`}>
+                  <div className="wick" />
+                  <div className="flame" />
+                </div>
+              ))}
+            </div>
+            <div className="cake-layer top-layer" />
+            <div className="cake-layer mid-layer" />
+            <div className="cake-layer base-layer" />
+          </div>
+        </div>
 
-        <button
-          className={`blow-btn ${!candles ? "blown" : ""}`}
-          onClick={blowCandles}
-          disabled={!candles}
-        >
-          {candles ? "🌬️ Blow the Candles!" : "🎉 Wish Made!"}
+        <button className="blow-button" onClick={blowCandles} disabled={!candlesLit}>
+          {candlesLit ? "🌬️ Blow the Candles" : "🎉 Wish Made"}
         </button>
 
         {showMessage && (
           <div className="wish-message">
-            <div className="wish-emoji">🥳</div>
-            <p>Make a wish! Hope it's something better than your last ........ 😂</p>
+            <div className="wish-icon">🥳</div>
+            <p>Make a wish! Hope it's something better than your last... 😂</p>
           </div>
         )}
       </section>
 
-      {/* PARALLAX MESSAGE */}
-      <ParallaxSection scrollY={scrollY} offset={600}>
-        <div className="parallax-block">
-          <div className="parallax-inner">
-            <h2>Hey Nabina,</h2>
-            <p>
-              Today we celebrate YOU — the queen who survived drama, grew through every challenge,
-              and somehow still has the energy to look absolutely amazing while doing it. 👸
-            </p>
-            <p>
-              We're not going to talk about the past... except just to say that you clearly upgraded 
-              your taste in everything this year. Including cake. 🎂
-            </p>
-          </div>
+      <section className="message-section">
+        <div className="message-card">
+          <h2>Hey Nabina,</h2>
+          <p>
+            Today we celebrate YOU — the queen who survived drama, grew through every challenge,
+            and somehow still has the energy to look absolutely amazing while doing it. 👸
+          </p>
+          <p>
+            We're not going to talk about the past... except just to say that you clearly upgraded
+            your taste in everything this year. Including cake. 🎂
+          </p>
         </div>
-      </ParallaxSection>
+      </section>
 
-      {/* ROAST CARDS SECTION */}
       <section className="roast-section">
         <div className="roast-header">
           <h2>Birthday</h2>
-          <p>
-            (All jokes aside — you're genuinely incredible. But also... 
-            these are all 100% accurate 😆)
-          </p>
+          <p>(All jokes aside — you're genuinely incredible. But also... these are all 100% accurate 😆)</p>
         </div>
+
         <div className="roast-grid">
-          {roasts.map((roast, i) => (
-            <RoastCard key={i} roast={roast} index={i} />
+          {roasts.map((roast, index) => (
+            <article key={index} className="roast-card">
+              <div className="roast-emoji">{roast.emoji}</div>
+              <h3>{roast.title}</h3>
+              <p>{roast.text}</p>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* FINAL PARALLAX */}
-      <ParallaxSection scrollY={scrollY} offset={2200}>
-        <div className="parallax-block pink-block">
-          <div className="parallax-inner">
-            <div style={{ fontSize: "4rem", marginBottom: "1rem" }}>💖</div>
-            <h2>Here's to You!</h2>
-            <p>
-              May this birthday be the start of the best chapter yet. No more reruns of 
-              old stories — only new adventures, big laughs, and people who ACTUALLY 
-              deserve to be in your story. 📖✨
-            </p>
-            <p>
-              The world is yours, Nabina. Go claim it! 🌍
-            </p>
-          </div>
+      <section className="final-section">
+        <div className="final-card">
+          <div className="final-icon">💖</div>
+          <h2>Here's to You!</h2>
+          <p>
+            May this birthday be the start of the best chapter yet. No more reruns of old stories —
+            only new adventures, big laughs, and people who ACTUALLY deserve to be in your story. 📖✨
+          </p>
+          <p>The world is yours, Nabina. Go claim it! 🌍</p>
         </div>
-      </ParallaxSection>
+      </section>
 
-      {/* FOOTER */}
-      <footer className="bday-footer">
+      <footer className="footer-section">
         <div className="footer-fireworks">🎆🎇✨🎉🎊🥳🎂🎁🎆</div>
         <h3>Happy Birthday Nabina! 🥳</h3>
-        <p>
-          You're one year closer to figuring it all out.<br />
-          (You're basically already there, though. 💯)
-        </p>
-        <div className="footer-fireworks" style={{ marginTop: "1.5rem" }}>🎂🎉🎊✨🎇🎆🥳🎁🎂</div>
+        <p>You're one year closer to figuring it all out. (You're basically already there, though. 💯)</p>
+        <div className="footer-fireworks">🎂🎉🎊✨🎇🎆🥳🎁🎂</div>
       </footer>
     </div>
   );
