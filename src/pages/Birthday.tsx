@@ -14,7 +14,7 @@ const roasts = [
   {
     emoji: "👑",
     title: "Queen Energy, Always",
-    text: "You're aging like fine wine — getting better every year, while your ex is probably still trying to figure out how to do laundry. Classic. 😂",
+    text: "You're aging like fine wine — getting better every year, while you is probably still trying to figure out how to do laundry. Classic. 😂",
   },
   {
     emoji: "🌟",
